@@ -3,15 +3,19 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import shareIcon from '../images/shareIcon.svg';
+import { fetchRecipe, fetchSugestion,
+  setItemStorage } from '../services/functionRecipeDetails';
 import { fetchRecipe, fetchSugestion } from '../services/RequestAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 // import FavoriteButton from '../components/FavoriteButton';
+
 
 function RecipeDetails() {
   const { setRecipeDetails, recipeDetails, ingredients, measure,
     setIngredients, setMeasure, setRecipeSugestion, // favoriteRecipes, setFavoriteRecipes,
   } = useContext(RecipeContext);
   const [isMessage, setIsMessage] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const { id } = useParams();
 
@@ -45,9 +49,23 @@ function RecipeDetails() {
     // localStorage.setItem('favoriteRecipes', );
   };
 
-  // const opa = () => {
+  const favoriteRecipe = (mealOrDrink) => {
+    const obj = {
+      id: mealOrDrink === 'meals' ? recipeDetails.idMeal : recipeDetails.idDrink,
+      type: mealOrDrink === 'meals' ? 'meal' : 'drink',
+      nationality: mealOrDrink === 'meals' ? recipeDetails.strArea : '',
+      category: recipeDetails.strCategory,
+      alcoholicOrNot: mealOrDrink === 'meals' ? '' : recipeDetails.strAlcoholic,
+      name: mealOrDrink === 'meals' ? recipeDetails.strMeal : recipeDetails.strDrink,
+      image: mealOrDrink === 'meals' ? recipeDetails.strMealThumb
+        : recipeDetails.strDrinkThumb,
+    };
 
-  // };
+    if (isFavorite) {
+      setIsFavorite(false);
+    } else { setItemStorage('favoriteRecipes', [obj]); setIsFavorite(true); }
+  };
+
 
   return (
     <>
@@ -101,7 +119,7 @@ function RecipeDetails() {
             </li>
           ))}
         </ul>
-        {/* <FavoriteButton /> */}
+
         { history.location.pathname.includes('meals') // Recipe Video
           ? (
             <iframe
@@ -127,31 +145,33 @@ function RecipeDetails() {
         >
           <img src={ shareIcon } alt="Share Recipe" />
         </button>
-      </section>
-      <section>
+
         <button
           type="button"
           name="favorite-btn"
           data-testid="favorite-btn"
-          onClick={ shareRecipe }
+          onClick={ history.location.pathname.includes('meals')
+            ? () => favoriteRecipe('meals')
+            : () => favoriteRecipe('drinks') }
         >
+          favorite
           <img
             src={ blackHeartIcon }
             alt="favoritar"
           />
-        </button>
 
+        </button>
         { isMessage ? <p>Link copied!</p> : null }
-
-        <button
-          type="button"
-          name="start-btn"
-          data-testid="start-recipe-btn"
-          className="btn-fixed"
-        >
-          Start Recipe
-        </button>
       </section>
+
+      <button
+        type="button"
+        name="start-btn"
+        data-testid="start-recipe-btn"
+        className="btn-fixed"
+      >
+        Start Recipe
+      </button>
     </>
   );
 }
