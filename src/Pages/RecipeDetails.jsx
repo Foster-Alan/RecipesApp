@@ -5,10 +5,14 @@ import RecipeContext from '../context/RecipeContext';
 import shareIcon from '../images/shareIcon.svg';
 import { fetchRecipe, fetchSugestion,
   setItemStorage } from '../services/functionRecipeDetails';
+import { fetchRecipe, fetchSugestion } from '../services/RequestAPI';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import FavoriteButton from '../components/FavoriteButton';
+
 
 function RecipeDetails() {
   const { setRecipeDetails, recipeDetails, ingredients, measure,
-    setIngredients, setMeasure, setRecipeSugestion,
+    setIngredients, setMeasure, setRecipeSugestion, // favoriteRecipes, setFavoriteRecipes,
   } = useContext(RecipeContext);
   const [isMessage, setIsMessage] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -42,6 +46,7 @@ function RecipeDetails() {
   const shareRecipe = () => {
     clipboardCopy(window.location.href);
     setIsMessage(true);
+    // localStorage.setItem('favoriteRecipes', );
   };
 
   const favoriteRecipe = (mealOrDrink) => {
@@ -60,6 +65,7 @@ function RecipeDetails() {
       setIsFavorite(false);
     } else { setItemStorage('favoriteRecipes', [obj]); setIsFavorite(true); }
   };
+
 
   return (
     <>
@@ -149,6 +155,11 @@ function RecipeDetails() {
             : () => favoriteRecipe('drinks') }
         >
           favorite
+          <img
+            src={ blackHeartIcon }
+            alt="favoritar"
+          />
+
         </button>
         { isMessage ? <p>Link copied!</p> : null }
       </section>
