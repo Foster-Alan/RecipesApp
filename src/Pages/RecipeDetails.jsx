@@ -6,7 +6,6 @@ import shareIcon from '../images/shareIcon.svg';
 import { fetchRecipe, fetchSugestion,
   setItemStorage } from '../services/functionRecipeDetails';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-// import FavoriteButton from '../components/FavoriteButton';
 
 function RecipeDetails() {
   const { setRecipeDetails, recipeDetails, ingredients, measure,
