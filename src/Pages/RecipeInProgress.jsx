@@ -50,11 +50,11 @@ function RecipeInProgress() {
       const filterMeasure = measureIngredie.map((recipe) => recipe[1]);
       setIngredients(filterIng);
       setMeasures(filterMeasure);
-      if (path === 'drinks') {
+    /*       if (path === 'drinks') {
         setIsAlchoolic(recipeDetails[0].strAlcoholic);
-      }
+      } */
     }
-  }, [recipeDetails, path]);
+  }, [recipeDetails]);
   const initialState = useCallback(() => {
     let local = JSON.parse(localStorage.getItem('inRecipeProgress'));
     if (!local) {

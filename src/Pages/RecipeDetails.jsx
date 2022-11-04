@@ -64,6 +64,14 @@ function RecipeDetails() {
     } else { setItemStorage('favoriteRecipes', [obj]); setIsFavorite(true); }
   };
 
+  const redirect = () => {
+    if (history.location.pathname.includes('meals')) {
+      history.push(`./${id}/in-progress`);
+    } if (history.location.pathname.includes('drinks')) {
+      history.push(`./${id}/in-progress`);
+    }
+  };
+
   return (
     <>
       <section>
@@ -166,6 +174,7 @@ function RecipeDetails() {
         name="start-btn"
         data-testid="start-recipe-btn"
         className="btn-fixed"
+        onClick={ () => redirect() }
       >
         Start Recipe
       </button>
