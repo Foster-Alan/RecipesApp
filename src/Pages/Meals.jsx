@@ -116,6 +116,7 @@ function Meals() {
                 key={ i }
               >
                 <Card
+                  // name="name"
                   index={ i }
                   thumbnail={ meals.strMealThumb }
                   id={ meals.idMeal }
