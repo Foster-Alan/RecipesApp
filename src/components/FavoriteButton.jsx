@@ -43,7 +43,7 @@ function FavoriteButton({ recipe, teste }) {
   return (
     <button type="button">
       <img
-        data-teste={ teste }
+        data-testid={ teste }
         src={ isFavorite ? favoriteIcon : unfavoriteIcon }
         alt="favorite"
         onClick={ () => favorite() }

@@ -36,3 +36,9 @@ export async function fetchSugestion(pathname, setState) {
     setState(arrLimite);
   }
 }
+
+export const setItemStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getItemStorage = (key) => JSON.parse(localStorage.getItem(key));
